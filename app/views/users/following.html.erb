@@ -1,17 +1,20 @@
 <h2>Follow User</h2>
-  <table class="table">
-   <thead>
-    <tr>
-     <th>image</th>
-     <th>name</th>
-     <th></th>
-     <th></th>
-     <th></th>
-     <th></th>
-    </tr>
-   </thead>
-   <tbody>
-    <% @user.following_user.where.not(id: current_user.id).each do |user| %>
+<% if @user.following_user.count == 0 %>
+ ユーザーはいません
+<% else %>
+ <table class="table">
+  <thead>
+   <tr>
+    <th>image</th>
+    <th>name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+   </tr>
+  </thead>
+  <tbody>
+    <% @user.following_user.each do |user| %>
      <tr>
       <td><%= attachment_image_tag user, :profile_image, format: 'jpeg', fallback: "no_image.jpeg",size: "40x40" %></td>
       <td><%= user.name %></td>
@@ -31,4 +34,5 @@
     <% end %>
    </tbody>
   </table>
- <%= render 'books/footer', user: @user,book: @book %>
+ <% end %>
+<%= render 'books/footer', user: @user,book: @book %>
